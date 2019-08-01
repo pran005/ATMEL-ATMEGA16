@@ -1,0 +1,239 @@
+
+EEPROM.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000166  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001ba  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001ba  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001ec  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000a8  00000000  00000000  00000228  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000d38  00000000  00000000  000002d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000703  00000000  00000000  00001008  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000648  00000000  00000000  0000170b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000011c  00000000  00000000  00001d54  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000042f  00000000  00000000  00001e70  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000752  00000000  00000000  0000229f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000058  00000000  00000000  000029f1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 7f 00 	call	0xfe	; 0xfe <main>
+  64:	0c 94 b1 00 	jmp	0x162	; 0x162 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <_Z3cmdh>:
+
+void lcd(double d)
+{   char str[50] ; 
+	dtostrf(d,8,4,str) ;
+	lcd(str);
+}
+  6c:	98 2f       	mov	r25, r24
+  6e:	90 7f       	andi	r25, 0xF0	; 240
+  70:	94 60       	ori	r25, 0x04	; 4
+  72:	98 bb       	out	0x18, r25	; 24
+  74:	e3 ec       	ldi	r30, 0xC3	; 195
+  76:	f9 e0       	ldi	r31, 0x09	; 9
+  78:	31 97       	sbiw	r30, 0x01	; 1
+  7a:	f1 f7       	brne	.-4      	; 0x78 <_Z3cmdh+0xc>
+  7c:	00 c0       	rjmp	.+0      	; 0x7e <_Z3cmdh+0x12>
+  7e:	00 00       	nop
+  80:	c2 98       	cbi	0x18, 2	; 24
+  82:	f0 e1       	ldi	r31, 0x10	; 16
+  84:	8f 9f       	mul	r24, r31
+  86:	c0 01       	movw	r24, r0
+  88:	11 24       	eor	r1, r1
+  8a:	84 60       	ori	r24, 0x04	; 4
+  8c:	88 bb       	out	0x18, r24	; 24
+  8e:	83 ec       	ldi	r24, 0xC3	; 195
+  90:	99 e0       	ldi	r25, 0x09	; 9
+  92:	01 97       	sbiw	r24, 0x01	; 1
+  94:	f1 f7       	brne	.-4      	; 0x92 <_Z3cmdh+0x26>
+  96:	00 c0       	rjmp	.+0      	; 0x98 <_Z3cmdh+0x2c>
+  98:	00 00       	nop
+  9a:	c2 98       	cbi	0x18, 2	; 24
+  9c:	08 95       	ret
+
+0000009e <_Z3lcdc>:
+  9e:	98 2f       	mov	r25, r24
+  a0:	90 7f       	andi	r25, 0xF0	; 240
+  a2:	95 60       	ori	r25, 0x05	; 5
+  a4:	98 bb       	out	0x18, r25	; 24
+  a6:	e3 ec       	ldi	r30, 0xC3	; 195
+  a8:	f9 e0       	ldi	r31, 0x09	; 9
+  aa:	31 97       	sbiw	r30, 0x01	; 1
+  ac:	f1 f7       	brne	.-4      	; 0xaa <_Z3lcdc+0xc>
+  ae:	00 c0       	rjmp	.+0      	; 0xb0 <_Z3lcdc+0x12>
+  b0:	00 00       	nop
+  b2:	c2 98       	cbi	0x18, 2	; 24
+  b4:	82 95       	swap	r24
+  b6:	80 7f       	andi	r24, 0xF0	; 240
+  b8:	85 60       	ori	r24, 0x05	; 5
+  ba:	88 bb       	out	0x18, r24	; 24
+  bc:	83 ec       	ldi	r24, 0xC3	; 195
+  be:	99 e0       	ldi	r25, 0x09	; 9
+  c0:	01 97       	sbiw	r24, 0x01	; 1
+  c2:	f1 f7       	brne	.-4      	; 0xc0 <_Z3lcdc+0x22>
+  c4:	00 c0       	rjmp	.+0      	; 0xc6 <_Z3lcdc+0x28>
+  c6:	00 00       	nop
+  c8:	c2 98       	cbi	0x18, 2	; 24
+  ca:	08 95       	ret
+
+000000cc <_Z7clr_lcdv>:
+  cc:	81 e0       	ldi	r24, 0x01	; 1
+  ce:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+  d2:	08 95       	ret
+
+000000d4 <_Z8init_LCDv>:
+
+void init_LCD(void)
+{	DDRB = 0xff ;
+  d4:	8f ef       	ldi	r24, 0xFF	; 255
+  d6:	87 bb       	out	0x17, r24	; 23
+	
+	/* Replace with your application code */
+	cmd(0x02) ;                             //return home
+  d8:	82 e0       	ldi	r24, 0x02	; 2
+  da:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+	cmd(0x28) ;								//4 bit mode
+  de:	88 e2       	ldi	r24, 0x28	; 40
+  e0:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+	cmd(0x0e) ;								//display on , cursor blinking
+  e4:	8e e0       	ldi	r24, 0x0E	; 14
+  e6:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+	cmd(0x06) ;								//cursor++
+  ea:	86 e0       	ldi	r24, 0x06	; 6
+  ec:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+	cmd(0x01) ;							    //cls
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+	cmd(0x80) ;								//cursor beginning to 1st line 
+  f6:	80 e8       	ldi	r24, 0x80	; 128
+  f8:	0e 94 36 00 	call	0x6c	; 0x6c <_Z3cmdh>
+  fc:	08 95       	ret
+
+000000fe <main>:
+#include <avr/eeprom.h>
+
+int main(void)
+{   uint8_t data='a' ; 
+	uint8_t read ;
+	init_LCD() ; 
+  fe:	0e 94 6a 00 	call	0xd4	; 0xd4 <_Z8init_LCDv>
+	//lcd(data) ; 
+	/* Replace with your application code */
+    while (1) 
+    { 
+		
+		eeprom_update_byte((uint8_t*)0x0A,data) ; 
+ 102:	61 e6       	ldi	r22, 0x61	; 97
+ 104:	8a e0       	ldi	r24, 0x0A	; 10
+ 106:	90 e0       	ldi	r25, 0x00	; 0
+ 108:	0e 94 a0 00 	call	0x140	; 0x140 <eeprom_update_byte>
+		read = eeprom_read_byte((const uint8_t*)0x0A) ; 
+ 10c:	8a e0       	ldi	r24, 0x0A	; 10
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	0e 94 98 00 	call	0x130	; 0x130 <eeprom_read_byte>
+		lcd((char)read) ;  
+ 114:	0e 94 4f 00 	call	0x9e	; 0x9e <_Z3lcdc>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 118:	2f ef       	ldi	r18, 0xFF	; 255
+ 11a:	80 e7       	ldi	r24, 0x70	; 112
+ 11c:	92 e0       	ldi	r25, 0x02	; 2
+ 11e:	21 50       	subi	r18, 0x01	; 1
+ 120:	80 40       	sbci	r24, 0x00	; 0
+ 122:	90 40       	sbci	r25, 0x00	; 0
+ 124:	e1 f7       	brne	.-8      	; 0x11e <main+0x20>
+ 126:	00 c0       	rjmp	.+0      	; 0x128 <main+0x2a>
+ 128:	00 00       	nop
+		_delay_ms(800) ;
+		clr_lcd(); 
+ 12a:	0e 94 66 00 	call	0xcc	; 0xcc <_Z7clr_lcdv>
+ 12e:	e9 cf       	rjmp	.-46     	; 0x102 <main+0x4>
+
+00000130 <eeprom_read_byte>:
+ 130:	e1 99       	sbic	0x1c, 1	; 28
+ 132:	fe cf       	rjmp	.-4      	; 0x130 <eeprom_read_byte>
+ 134:	9f bb       	out	0x1f, r25	; 31
+ 136:	8e bb       	out	0x1e, r24	; 30
+ 138:	e0 9a       	sbi	0x1c, 0	; 28
+ 13a:	99 27       	eor	r25, r25
+ 13c:	8d b3       	in	r24, 0x1d	; 29
+ 13e:	08 95       	ret
+
+00000140 <eeprom_update_byte>:
+ 140:	26 2f       	mov	r18, r22
+
+00000142 <eeprom_update_r18>:
+ 142:	e1 99       	sbic	0x1c, 1	; 28
+ 144:	fe cf       	rjmp	.-4      	; 0x142 <eeprom_update_r18>
+ 146:	9f bb       	out	0x1f, r25	; 31
+ 148:	8e bb       	out	0x1e, r24	; 30
+ 14a:	e0 9a       	sbi	0x1c, 0	; 28
+ 14c:	01 97       	sbiw	r24, 0x01	; 1
+ 14e:	0d b2       	in	r0, 0x1d	; 29
+ 150:	02 16       	cp	r0, r18
+ 152:	31 f0       	breq	.+12     	; 0x160 <eeprom_update_r18+0x1e>
+ 154:	2d bb       	out	0x1d, r18	; 29
+ 156:	0f b6       	in	r0, 0x3f	; 63
+ 158:	f8 94       	cli
+ 15a:	e2 9a       	sbi	0x1c, 2	; 28
+ 15c:	e1 9a       	sbi	0x1c, 1	; 28
+ 15e:	0f be       	out	0x3f, r0	; 63
+ 160:	08 95       	ret
+
+00000162 <_exit>:
+ 162:	f8 94       	cli
+
+00000164 <__stop_program>:
+ 164:	ff cf       	rjmp	.-2      	; 0x164 <__stop_program>
